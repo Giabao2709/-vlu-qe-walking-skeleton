@@ -1,0 +1,31 @@
+name: Jest Unit Tests
+
+# Kích hoạt action khi có push hoặc pull request vào nhánh main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Sử dụng môi trường ảo Ubuntu
+
+    steps:
+    # Lấy mã nguồn từ repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Thiết lập môi trường Node.js
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20' # Sử dụng phiên bản Node 20
+
+    # Cài đặt các thư viện (phụ thuộc vào package.json)
+    - name: Install dependencies
+      run: npm install
+
+    # Chạy lệnh test
+    - name: Run tests
+      run: npm test
